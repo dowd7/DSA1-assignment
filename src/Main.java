@@ -1,5 +1,5 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -23,5 +23,37 @@ public class Main {
                 {"Virginia", "Richmond"}, {"Washington", "Olympia"}, {"West Virginia", "Charleston"},
                 {"Wisconsin", "Madison"}, {"Wyoming", "Cheyenne"}
         };
+
+        //Display the current contents of the array then use a bubble sort to sort the content by capital
+        System.out.println("Original Array:");
+        for(int i = 0; i < statesAndCapitals.length; i++) {
+            System.out.println(statesAndCapitals[i][0] + " - " + statesAndCapitals[i][1]);
+        }
+
+        //Bubble sort
+        for(int i = 0; i < statesAndCapitals.length; i++) {
+            for(int j = 0; j < statesAndCapitals.length - 1; j++) {
+                if(statesAndCapitals[j][1].compareTo(statesAndCapitals[j + 1][1]) > 0) {
+                    String[] temp = statesAndCapitals[j];
+                    statesAndCapitals[j] = statesAndCapitals[j + 1];
+                    statesAndCapitals[j + 1] = temp;
+                }
+            }
+        }
+
+        Scanner scan = new Scanner(System.in);
+        int counter = 0;
+
+        for(int i = 0; i < statesAndCapitals.length; i++) {
+            System.out.println("What is the capital of " + statesAndCapitals[i][0] + "?");
+            String answer = scan.nextLine();
+            if(answer.equalsIgnoreCase(statesAndCapitals[i][1])) {
+                System.out.println("Correct!");
+                counter++;
+            } else {
+                System.out.println("Incorrect. The correct answer is " + statesAndCapitals[i][1] + ".");
+            }
+        }
+        System.out.println("You got " + counter + " out of 50 correct!");
     }
 }
