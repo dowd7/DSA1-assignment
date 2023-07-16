@@ -1,10 +1,14 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
 
+        //Part 1
         //the 50 states and their capitals are stored in a two-dimensional array in order by state name
-        String[][] statesAndCapitals = {
+        String[][] statesAndCapitalsArray = {
                 {"Alabama", "Montgomery"}, {"Alaska", "Juneau"}, {"Arizona", "Phoenix"},
                 {"Arkansas", "Little Rock"}, {"California", "Sacramento"}, {"Colorado", "Denver"},
                 {"Connecticut", "Hartford"}, {"Delaware", "Dover"}, {"Florida", "Tallahassee"},
@@ -25,18 +29,17 @@ public class Main {
         };
 
         //Display the current contents of the array then use a bubble sort to sort the content by capital
-        System.out.println("Original Array:");
-        for(int i = 0; i < statesAndCapitals.length; i++) {
-            System.out.println(statesAndCapitals[i][0] + " - " + statesAndCapitals[i][1]);
+        for(int i = 0; i < statesAndCapitalsArray.length; i++) {
+            System.out.println(statesAndCapitalsArray[i][0] + " - " + statesAndCapitalsArray[i][1]);
         }
 
         //Bubble sort
-        for(int i = 0; i < statesAndCapitals.length; i++) {
-            for(int j = 0; j < statesAndCapitals.length - 1; j++) {
-                if(statesAndCapitals[j][1].compareTo(statesAndCapitals[j + 1][1]) > 0) {
-                    String[] temp = statesAndCapitals[j];
-                    statesAndCapitals[j] = statesAndCapitals[j + 1];
-                    statesAndCapitals[j + 1] = temp;
+        for(int i = 0; i < statesAndCapitalsArray.length; i++) {
+            for(int j = 0; j < statesAndCapitalsArray.length - 1; j++) {
+                if(statesAndCapitalsArray[j][1].compareTo(statesAndCapitalsArray[j + 1][1]) > 0) {
+                    String[] temp = statesAndCapitalsArray[j];
+                    statesAndCapitalsArray[j] = statesAndCapitalsArray[j + 1];
+                    statesAndCapitalsArray[j + 1] = temp;
                 }
             }
         }
@@ -44,16 +47,54 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         int counter = 0;
 
-        for(int i = 0; i < statesAndCapitals.length; i++) {
-            System.out.println("What is the capital of " + statesAndCapitals[i][0] + "?");
+        //iterate through the sorted array and prompt the user to enter the capital of each state
+        for(int i = 0; i < statesAndCapitalsArray.length; i++) {
+            System.out.println();
+            System.out.println("What is the capital of " + statesAndCapitalsArray[i][0] + "?");
             String answer = scan.nextLine();
-            if(answer.equalsIgnoreCase(statesAndCapitals[i][1])) {
+
+            System.out.println();
+
+            //if the user enters the correct capital, display a message indicating that they are correct and increment a counter
+            if(answer.equalsIgnoreCase(statesAndCapitalsArray[i][1])) {
                 System.out.println("Correct!");
                 counter++;
             } else {
-                System.out.println("Incorrect. The correct answer is " + statesAndCapitals[i][1] + ".");
+                System.out.println("Incorrect. The correct answer is " + statesAndCapitalsArray[i][1] + ".");
             }
         }
+
+        //display the number of correct answers
+        System.out.println();
         System.out.println("You got " + counter + " out of 50 correct!");
+
+
+        //Part 2
+        //store the pairs of each state and its capital in a Map using a HashMap
+        Map<String, String> statesAndCapitalsMap = new HashMap<>();
+        for(int i = 0; i < statesAndCapitalsArray.length; i++) {
+            statesAndCapitalsMap.put(statesAndCapitalsArray[i][0], statesAndCapitalsArray[i][1]);
+        }
+
+        //display the contents of the Map
+        System.out.println();
+        System.out.println(statesAndCapitalsMap);
+        System.out.println();
+
+        //use the TreeMap class to sort the map while using a binary search tree for storage
+        Map<String, String> statesAndCapitalsTreeMap = new TreeMap<>();
+        for(int i = 0; i < statesAndCapitalsArray.length; i++) {
+            statesAndCapitalsTreeMap.put(statesAndCapitalsArray[i][0], statesAndCapitalsArray[i][1]);
+        }
+
+        //prompt the user to enter a state and display the capital for that state
+        System.out.println("Enter a state to find its capital: ");
+        String state = scan.nextLine();
+        if(statesAndCapitalsTreeMap.containsKey(state)) {
+            System.out.println("The capital of " + state + " is " + statesAndCapitalsTreeMap.get(state) + ".");
+        } else {
+            System.out.println("The state you entered is not in the list (Case matters).");
+        }
+
     }
 }
